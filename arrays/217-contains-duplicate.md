@@ -2,9 +2,9 @@
 
 **Difficulty:** Easy
 
-**Topics:** Array
+**Topics:** Array, Sorting
 
-**Tags:** Brute Force, Duplicate Check, Basic Array Traversal
+**Tags:** Sorting, Adjacent Comparison, Duplicate Detection
 
 **LeetCode Link:** https://leetcode.com/problems/contains-duplicate/
 
@@ -48,15 +48,17 @@ Given an integer array `nums`, return `true` if any value appears at least twice
 
 ---
 
-### Approach (Brute Force) 
+### Approach (Sorting + Adjacent Check)
 
-- Compare every element with every other element using two nested loops.
+- Sort the array.
 
-- If any pair matches → duplicate found → return true.
+- Check adjacent elements:
 
-- If no pair matches → return false.
+- If `nums[i] == nums[i - 1]` → duplicate found.
 
-- Simple but very slow for large inputs.
+- If no duplicates found → return false.
+
+- Sorting helps bring duplicates next to each other.
 
 ---
 
@@ -65,14 +67,23 @@ Given an integer array `nums`, return `true` if any value appears at least twice
 ```java
 class Solution {
     public boolean containsDuplicate(int[] nums) {
-        for(int i = 0; i < nums.length - 1; i++) {
-            for(int j = i + 1; j < nums.length; j++) {
-                if(nums[i] == nums[j]) {
-                    return true;
-                }
+        Arrays.sort(nums);
+
+        for(int i = 1; i < nums.length; i++) {
+            if(nums[i] == nums[i - 1]) {
+                return true;
             }
         }
+
         return false;
+
+        // for(int i = 0; i < nums.length - 1; i++) {
+        //     if(nums[i] == nums[i + 1]) {
+        //         return true;
+        //     }
+        // }
+
+        // return false;
     }
 }
 ```
@@ -81,7 +92,7 @@ class Solution {
 
 ### Time & Space Complexity
 
-- Time Complexity: `O(n²)`
+- Time Complexity: `o(n log n)`
 
 - Space Complexity: `O(1)`
 
@@ -89,6 +100,6 @@ class Solution {
 
 ### Notes
 
-- Brute force is easy to understand but inefficient for large arrays.
+- Sorting-based approach is simple and effective.
 
-- Useful for understanding nested loop pair comparisons.
+- Faster than brute force but slower than HashSet approach.
